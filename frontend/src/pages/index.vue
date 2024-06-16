@@ -1,5 +1,7 @@
 <template>
-  <div>opa</div>
+  <div>
+    <v-text-field label="opa"></v-text-field>
+  </div>
 </template>
 
 <script setup lang="ts"></script>
