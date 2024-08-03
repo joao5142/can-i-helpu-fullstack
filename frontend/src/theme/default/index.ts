@@ -1,6 +1,8 @@
 export default {
   colors: {
     light: {
+      primary: '#4589F7',
+
       'text-50': '#F2F7FA',
       'text-100': '#EDF2F7',
       'text-200': '#E2E8F0',
@@ -147,6 +149,8 @@ export default {
       'pink-900': '#521B41',
     },
     dark: {
+      primary: '#4589F7',
+
       'text-50': '#4B4B4B',
       'text-100': '#5f5f5f',
       'text-200': '#737373',
@@ -313,7 +317,7 @@ export default {
     bold: 700,
   },
   fontFamily: {
-    primary: 'Montserrat',
+    primary: 'Mulish',
     secondary: 'Montserrat',
   },
 } as const
