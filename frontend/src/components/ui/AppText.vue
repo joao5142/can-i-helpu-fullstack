@@ -3,28 +3,19 @@
 </template>
 
 <script setup lang="ts">
-import { FontWeightTypes, FontSizesTypes, ColorTypes } from '@/plugins/vuetify'
+import { FontWeightTypes, FontSizesTypes, ColorTypes, FontFamilyTypes } from '@/plugins/vuetify'
 
-export type TextTagTypes =
-  | 'p'
-  | 'span'
-  | 'small'
-  | 'strong'
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h5'
+export type TextTagTypes = 'p' | 'span' | 'strong' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h5'
 
 interface IProps {
   as?: TextTagTypes
   size?: FontSizesTypes
   weight?: FontWeightTypes
   color?: ColorTypes
+  family?: FontFamilyTypes
 }
 
-const props = withDefaults(defineProps<IProps>(), { as: 'p' })
+const props = withDefaults(defineProps<IProps>(), { as: 'p', family: 'primary' })
 
 const customSizeClass = computed(() => {
   let classStr = ''
@@ -57,15 +48,6 @@ const customSizeClass = computed(() => {
     case '4xl':
       classStr = 'app-font-size-4xl'
       break
-    case '5xl':
-      classStr = 'app-font-size-5xl'
-      break
-    case '6xl':
-      classStr = 'app-font-size-6xl'
-      break
-    case '7xl':
-      classStr = 'app-font-size-7xl'
-      break
   }
 
   return classStr
@@ -96,13 +78,32 @@ const colorClass = computed(() => {
   return `text-${props.color}`
 })
 
+const familyClass = computed(() => {
+  if (props.family == 'primary') {
+    return 'font-family--primary'
+  } else {
+    return 'font-family--secondary'
+  }
+})
+
 const computedClasses = computed(() => {
-  return `${customSizeClass.value} ${customWeightClass.value} ${colorClass.value}`
+  return `${customSizeClass.value} ${customWeightClass.value} ${colorClass.value} ${familyClass}`
 })
 </script>
 
 <style lang="scss" scoped>
 .button--disabled > .text {
   color: rgb(var(--v-theme-text-500)) !important;
+}
+
+.font-family {
+  &--primary {
+    font-family: 'Mulish';
+  }
+  &--seconday {
+    &--primary {
+      font-family: 'Mulish';
+    }
+  }
 }
 </style>

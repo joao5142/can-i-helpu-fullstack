@@ -1,39 +1,32 @@
 <template>
-  <button class="button" :class="styleClasses">
+  <button class="button" :class="styleClasses" @click="!disabled ? $emit('click') : ''">
     <slot></slot>
   </button>
 </template>
 
 <script setup lang="ts">
-import { ColorTypes } from '@/plugins/vuetify'
+import { ColorType } from '@/plugins/vuetify'
 
 interface IProps {
   disabled?: boolean
   outlined?: boolean
   full?: boolean
   isFab?: boolean
-  rounded?: boolean | 'xl' | 'lg' | 'md' | 'sm'
-  borderColor?: ColorTypes
-  color?: ColorTypes
-  background?: ColorTypes
+  rounded?: boolean
+  borderColor?: ColorType
+  color?: ColorType
+  background?: ColorType
   size?: 'xl' | 'lg' | 'md' | 'sm'
 
   transparent?: boolean
-
-  width?: string | number | undefined
-  height?: string | number | undefined
-
-  translucid?: boolean
+  glow?: boolean
 }
 
 const props = withDefaults(defineProps<IProps>(), {
   size: 'md',
   background: 'primary',
   color: 'white',
-  width: undefined,
-  height: undefined,
-  borderColor: undefined,
-  translucid: false,
+  glow: false,
 })
 
 const styleClasses = computed(() => {
@@ -79,53 +72,23 @@ const styleClasses = computed(() => {
     stringClass += 'button--rounded '
   }
 
-  if (props.rounded !== undefined && props.rounded === 'lg') {
-    stringClass += 'button--rounded-lg '
-  }
-
-  if (props.rounded !== undefined && props.rounded === 'sm') {
-    stringClass += 'button--rounded-sm '
-  }
-
-  if (props.rounded !== undefined && props.rounded === 'md') {
-    stringClass += 'button--rounded-md '
-  }
-
-  if (props.rounded !== undefined && props.rounded === 'xl') {
-    stringClass += 'button--rounded-xl '
-  }
-
-  if (props.width !== undefined && props.width) {
-    stringClass += 'button--width '
-  }
-
-  if (props.height !== undefined && props.height) {
-    stringClass += 'button--height '
-  }
-
-  if (props.translucid !== undefined && props.translucid) {
-    stringClass += 'button--translucid '
+  if (props.glow !== undefined && props.glow) {
+    stringClass += 'button--glow '
   }
 
   return stringClass
-})
-
-const computedWidthUnit = computed(() => {
-  return `${props.width}px`
-})
-const computedHeightUnit = computed(() => {
-  return `${props.height}px`
 })
 </script>
 
 <style scoped lang="scss">
 .button {
-  font-weight: 600;
+  font-weight: 400;
+  font-size: var(--v-theme-font-size-sm);
   text-transform: none;
 
   transition: all 0.3s linear;
 
-  border-radius: 6px;
+  border-radius: 24px;
   border-color: rgb(var(--v-border-color));
 
   display: flex;
@@ -182,7 +145,7 @@ const computedHeightUnit = computed(() => {
   &--fab {
     width: 4rem;
     height: 4rem;
-    border-radius: 10px;
+    border-radius: 50%;
   }
 
   &--border {
@@ -198,34 +161,8 @@ const computedHeightUnit = computed(() => {
     border-radius: 50% !important;
   }
 
-  &--rounded-sm {
-    border-radius: 20px !important;
-  }
-
-  &--rounded-md {
-    border-radius: 30px !important;
-  }
-
-  &--rounded-lg {
-    border-radius: 40px !important;
-  }
-
-  &--rounded-xl {
-    border-radius: 50px !important;
-  }
-
-  &--width {
-    width: v-bind(computedWidthUnit);
-    min-width: v-bind(computedWidthUnit);
-  }
-  &--height {
-    height: v-bind(computedHeightUnit);
-    min-height: v-bind(computedHeightUnit);
-  }
-
-  &--translucid {
-    background-color: rgba(255, 255, 255, 0.06) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  &--glow {
+    box-shadow: 0px 5px 10px #4589f740;
   }
 }
 </style>
