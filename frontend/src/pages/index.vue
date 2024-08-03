@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <v-text-field label="opa"></v-text-field>
-  </div>
+  <div></div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+await navigateTo('/auth/login')
+</script>
 
 <style scoped></style>
