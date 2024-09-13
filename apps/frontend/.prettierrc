@@ -1,0 +1,3 @@
+{
+  "extends": "@can-i-helpu/config/prettier.config.mjs"
+}

@@ -1,8 +1,22 @@
 {
+  "name": "can-i-help-you",
   "private": true,
   "workspaces": [
-    "backend",
-    "frontend"
+    "packages/*",
+    "apps/*"
   ],
-  "scripts": {}
+  "packageManager": "npm@8.0.0",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "dev:web": "turbo run dev --filter web",
+    "dev:admin": "turbo run dev --filter admin",
+    "test": "turbo run test",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "install": "^0.13.0",
+    "npm": "^10.8.3",
+    "turbo": "^2.1.1"
+  }
 }
