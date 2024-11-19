@@ -1,13 +1,13 @@
 <template>
   <div class="login d-flex flex-column w-100">
-    <app-text
+    <AppText
       class="mt-10"
       weight="bold"
       as="span"
       size="4xl"
       color="text-900"
       family="secondary"
-      >Can I HelpU</app-text
+      >Can I HelpU</AppText
     >
 
     <app-text class="mt-10" as="span" size="lg" color="text-900"

@@ -22,10 +22,12 @@
     "pinia": "^2.1.7",
     "vite-plugin-vuetify": "^2.0.3",
     "vue": "^3.4.27",
-    "vue-router": "^4.3.3"
+    "vue-router": "^4.3.3",
+    "@can-i-helpu-ds/vue": "1.0.0",
+    "@can-i-helpu-ds/prettier-config": "1.0.0",
+    "@can-i-helpu-ds/eslint-config": "1.0.0"
   },
   "devDependencies": {
-    "@can-i-helpu/config": "*",
     "@nuxt/test-utils": "^3.8.1",
     "@vitejs/plugin-vue": "^5.0.3",
     "@vitest/coverage-v8": "^1.2.2",

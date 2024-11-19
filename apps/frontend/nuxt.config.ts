@@ -1,7 +1,5 @@
 import { NuxtPage } from "nuxt/schema";
 
-import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
-
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
@@ -13,11 +11,12 @@ export default defineNuxtConfig({
   serverDir: "../server",
 
   build: {
-    transpile: ["vuetify"],
+    transpile: ["@can-i-helpu-ds/vue"],
   },
 
   ssr: false,
-  css: ["@/styles/main.scss"],
+
+  css: ["@can-i-helpu-ds/vue/style"],
 
   app: {
     head: {
@@ -25,10 +24,6 @@ export default defineNuxtConfig({
 
       link: [
         { rel: "preconnect", href: "https://fonts.gstatic.com" },
-        {
-          rel: "stylesheet",
-          href: "https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap",
-        },
 
         { rel: "icon", type: "image/png", href: "/public/favicon.png" },
       ],
@@ -40,7 +35,7 @@ export default defineNuxtConfig({
       pages.push({
         name: "home",
         path: "/",
-        redirect: "auth/login",
+        redirect: "/auth/login",
       });
 
       function acceptPagesMatching(pages: NuxtPage[] = []) {
@@ -63,32 +58,7 @@ export default defineNuxtConfig({
     },
   },
 
-  vite: {
-    vue: {
-      template: {
-        transformAssetUrls,
-      },
-    },
-  },
-
-  components: [
-    {
-      global: true,
-      path: "@/components/ui",
-      pathPrefix: false,
-    },
-    { global: true, path: "@/components/partials", pathPrefix: false },
-  ],
-
-  modules: [
-    "@pinia/nuxt",
-    (_options, nuxt) => {
-      nuxt.hooks.hook("vite:extendConfig", (config) => {
-        // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }));
-      });
-    },
-  ],
+  modules: ["@pinia/nuxt"],
 
   compatibilityDate: "2024-09-12",
 });
