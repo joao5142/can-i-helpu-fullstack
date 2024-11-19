@@ -14,9 +14,9 @@
 </template>
 
 <script setup lang="ts">
-import BannerImage from '@/assets/img/background.webp'
+import BannerImage from "@/assets/img/wallpaper.jpg";
 
-const { isLoading } = useLoadingIndicator()
+const { isLoading } = useLoadingIndicator();
 </script>
 
 <style scoped lang="scss">
