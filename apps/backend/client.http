@@ -1,17 +1,13 @@
-@baseUrl= http://localhost:3333/api
+@baseUrl= http://localhost:3000/api
 
 # @name test
-GET  {{@baseUrl}}/hello
+GET  {{baseUrl}}/hello
 Content-Type:  application/json
-
-{
- 
-}
 
 ###
 
 # @name create_account
-POST {{@baseUrl}}/accounts
+POST {{baseUrl}}/accounts
 Content-Type:  application/json
 
 {
@@ -23,7 +19,7 @@ Content-Type:  application/json
 ###
 
 # @name authenticate
-POST {{@baseUrl}}/sessions
+POST {{baseUrl}}/sessions
 Content-Type:  application/json
 
 {
