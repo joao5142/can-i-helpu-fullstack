@@ -1,17 +1,30 @@
-@baseUrl= http://localhost:3000/api
+@baseUrl= http://localhost:3333/api
+@authToken= {{login.response.body.access_token }}
+
 
 # @name test
-GET  {{baseUrl}}/hello
+GET {{baseUrl}}/hello
 Content-Type:  application/json
-
+ 
 ###
 
 # @name create_account
-POST {{baseUrl}}/accounts
+POST {{baseUrl}}/auth/register
 Content-Type:  application/json
 
 {
-    "name":"João Pauulo",
+    "name":"João",
+    "email":"joao@gmail.com.br",
+    "password":"123456"
+}
+
+###
+
+# @name login
+POST {{baseUrl}}/auth/login
+Content-Type:  application/json
+
+{
     "email":"joao@gmail.com.br",
     "password":"123456"
 }
