@@ -5,7 +5,10 @@
     "packages/*",
     "apps/*"
   ],
-  "packageManager": "npm@8.0.0",
+  "packageManager": "pnpm@8.15.6",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
@@ -15,8 +18,11 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "install": "^0.13.0",
-    "npm": "^10.8.3",
     "turbo": "^2.1.1"
+  },
+  "overrides": {
+    "vue": "3.5.13",
+    "vue-router": "4.2.5",
+    "@vue/devtools-api": "6.6.4"
   }
 }

@@ -1,21 +1,25 @@
 import { NuxtPage } from "nuxt/schema";
 
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  future: {
+    compatibilityVersion: 4,
+  },
 
+  devtools: { enabled: true },
   rootDir: __dirname,
   srcDir: "src/",
-
   dir: { public: "../public" },
-
   serverDir: "../server",
 
   build: {
-    transpile: ["@can-i-helpu-ds/vue"],
+    transpile: ["@can-i-helpu-ds/vue", "@vue/devtools-api"],
+  },
+
+  alias: {
+    "@vue/devtools-api": "@vue/devtools-api",
   },
 
   ssr: false,
-
   css: ["@can-i-helpu-ds/vue/style"],
 
   app: {
@@ -33,7 +37,7 @@ export default defineNuxtConfig({
   hooks: {
     "pages:extend"(pages) {
       pages.push({
-        name: "home",
+        name: "login",
         path: "/",
         redirect: "/auth/login",
       });
@@ -60,5 +64,11 @@ export default defineNuxtConfig({
 
   modules: ["@pinia/nuxt"],
 
-  compatibilityDate: "2024-09-12",
+  vite: {
+    resolve: {
+      preserveSymlinks: true,
+    },
+  },
+
+  compatibilityDate: "2025-02-04",
 });
