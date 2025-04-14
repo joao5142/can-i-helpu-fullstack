@@ -77,9 +77,6 @@ export default defineNuxtConfig({
       globPatterns: [], // Não fazer precache de nada
       runtimeCaching: [],
     },
-    injectManifest: {
-      injectionPoint: undefined,
-    },
     selfDestroying: true,
     manifest: {
       name: "Can I HelpU App",
