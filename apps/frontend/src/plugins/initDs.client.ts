@@ -1,3 +1,4 @@
+import "vuetify/styles";
 import DsConfig, { vuetifyConfig } from "@can-i-helpu-ds/vue";
 
 export default defineNuxtPlugin((nuxtApp) => {
