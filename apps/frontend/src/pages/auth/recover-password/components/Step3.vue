@@ -6,13 +6,21 @@
       class="mt-15 py-4 d-flex justify-center align-center mb-9"
     >
       <ph-info :size="25" weight="light" />
-      <app-text class="ms-2 d-block" size="sm" color="gray-600" as="span" weight="medium">
+      <app-text
+        class="ms-2 d-block"
+        size="sm"
+        color="gray-600"
+        as="span"
+        weight="medium"
+      >
         Escolha uma nova senha para a sua conta
       </app-text>
     </app-box>
 
     <label for="senha">
-      <app-text size="sm" color="gray-600" as="span" weight="medium">Informe sua senha</app-text>
+      <app-text size="sm" color="gray-600" as="span" weight="medium"
+        >Informe sua senha</app-text
+      >
     </label>
 
     <v-text-field
@@ -79,7 +87,9 @@
       :color="primaryColor"
       placeholder="Confirme sua senha"
       :error-messages="inputs.password_confirmation.errors"
-      @input="$emit('changePasswordConfirmation', inputs.password_confirmation.value)"
+      @input="
+        $emit('changePasswordConfirmation', inputs.password_confirmation.value)
+      "
     >
       <template #prepend-inner>
         <ph-key class="me-3" :color="gray500" size="20" />
@@ -106,76 +116,55 @@
 </template>
 
 <script setup lang="ts">
-import { PhInfo, PhKey, PhEye, PhEyeSlash, PhXCircle } from '@phosphor-icons/vue'
-import { useTheme } from 'vuetify'
-
 import {
-  min8Characters,
-  uppercaseCharacters,
-  lowercaseCharacters,
-  specialCharacters,
-} from '@/utils/regex'
+  PhInfo,
+  PhKey,
+  PhEye,
+  PhEyeSlash,
+  PhXCircle,
+} from "@phosphor-icons/vue";
+import { useTheme } from "vuetify";
 
-const theme = useTheme()
+const theme = useTheme();
 
 type EmitTypes = {
-  passwordValidated: [isValid: boolean]
-  changePassword: [password: string]
-  changePasswordConfirmation: [password: string]
-}
-const emit = defineEmits<EmitTypes>()
+  passwordValidated: [isValid: boolean];
+  changePassword: [password: string];
+  changePasswordConfirmation: [password: string];
+};
+const emit = defineEmits<EmitTypes>();
 
 const {
   primary: primaryColor,
-  'gray-500': gray500,
-  'green-500': green500,
-  'orange-500': orange500,
-} = theme.current.value.colors
+  "gray-500": gray500,
+  "green-500": green500,
+  "orange-500": orange500,
+} = theme.current.value.colors;
 
 const inputs = reactive({
-  password: { errors: [], show: false, value: '' },
-  password_confirmation: { errors: [], show: false, value: '' },
-})
+  password: { errors: [], show: false, value: "" },
+  password_confirmation: { errors: [], show: false, value: "" },
+});
 
-const passwordStatus = reactive({
-  1: {
-    name: 'Ao menos 8 caractéres',
-    value: false,
-    regex: min8Characters,
-  },
-  2: {
-    name: 'Ao menos 1 letra maiúscula (a-z)',
-    value: false,
-    regex: uppercaseCharacters,
-  },
-  3: {
-    name: 'Ao menos 1 letra minúscula (a-z)',
-    value: false,
-    regex: lowercaseCharacters,
-  },
-  4: {
-    name: 'Ao mínimo 1 caracter especial (-!@#$%^&*)',
-    value: false,
-    regex: specialCharacters,
-  },
-})
-const passwordStatusNoWrapper = toRaw(passwordStatus)
+const passwordStatusNoWrapper = toRaw(passwordStatus);
 
 watch(inputs.password, () => {
   for (const key in passwordStatusNoWrapper) {
-    const status = passwordStatus[key as '1' | '2' | '3' | '4']
+    const status = passwordStatus[key as "1" | "2" | "3" | "4"];
 
-    status.value = inputs.password.value.match(status.regex) !== null
+    status.value = inputs.password.value.match(status.regex) !== null;
   }
 
-  const isValid = Object.values(passwordStatusNoWrapper).every((status) => status.value)
+  const isValid = Object.values(passwordStatusNoWrapper).every(
+    (status) => status.value,
+  );
 
   if (isValid) {
-    emit('passwordValidated', true)
+    emit("passwordValidated", true);
   } else {
-    emit('passwordValidated', false)
+    emit("passwordValidated", false);
   }
-})
+});
 </script>
 
 <style scoped></style>
