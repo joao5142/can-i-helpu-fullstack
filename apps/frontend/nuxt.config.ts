@@ -1,4 +1,5 @@
 import { NuxtPage } from "nuxt/schema";
+import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
 export default defineNuxtConfig({
   future: {
@@ -12,7 +13,7 @@ export default defineNuxtConfig({
   serverDir: "../server",
 
   build: {
-    transpile: ["@can-i-helpu-ds/vue", "@vue/devtools-api"],
+    transpile: ["@can-i-helpu-ds/vue", "@vue/devtools-api", "vuetify"],
   },
 
   alias: {
@@ -36,12 +37,6 @@ export default defineNuxtConfig({
 
   hooks: {
     "pages:extend"(pages) {
-      pages.push({
-        name: "login",
-        path: "/",
-        redirect: "/auth/login",
-      });
-
       function acceptPagesMatching(pages: NuxtPage[] = []) {
         const pagesToRemove = [];
         for (const page of pages) {
@@ -62,11 +57,66 @@ export default defineNuxtConfig({
     },
   },
 
-  modules: ["@pinia/nuxt"],
+  modules: [
+    "@pinia/nuxt",
+    (_options, nuxt) => {
+      nuxt.hooks.hook("vite:extendConfig", (config) => {
+        // @ts-expect-error
+        config.plugins.push(vuetify({ autoImport: true }));
+      });
+    },
+    "nuxt-svgo",
+    "@vite-pwa/nuxt",
+  ],
+
+  pwa: {
+    manifest: {
+      name: "Can I HelpU App",
+      short_name: "Can I HelpU App",
+      description: "Can I HelpU App",
+      start_url: "/",
+      theme_color: "#ffffff",
+      display: "standalone",
+      lang: "pt-br",
+      screenshots: [
+        {
+          src: "manifest/screen.png",
+          sizes: "320x320",
+          type: "image/png",
+          form_factor: "wide",
+          label: "Can I HelpU",
+        },
+      ],
+      icons: [
+        {
+          src: "manifest/icons/64x64.png",
+          sizes: "64x64",
+          type: "image/png",
+        },
+        {
+          src: "manifest/icons/144x144.png",
+          sizes: "144x144",
+          type: "image/png",
+        },
+        {
+          src: "manifest/icons/192x192.png",
+          sizes: "192x192",
+          type: "image/png",
+        },
+        {
+          src: "manifest/icons/512x512.png",
+          sizes: "512x512",
+          type: "image/png",
+        },
+      ],
+    },
+  },
 
   vite: {
-    resolve: {
-      preserveSymlinks: true,
+    vue: {
+      template: {
+        transformAssetUrls,
+      },
     },
   },
 
