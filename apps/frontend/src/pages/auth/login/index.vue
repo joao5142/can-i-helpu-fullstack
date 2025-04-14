@@ -14,11 +14,13 @@
     <app-text class="mt-10" as="span" size="lg" color="text-900">
       Bem vindo
     </app-text>
+
     <app-text as="strong" size="xl" color="text-900">
       Entre na sua conta
     </app-text>
 
     <app-input class="mt-10" type="text" placeholder="E-mail" />
+
     <app-input class="mt-3" type="text" placeholder="Senha" />
 
     <app-text
@@ -28,7 +30,7 @@
       size="sm"
       color="text-900"
     >
-      <NuxtLink to="/auth/register" prefetch class="link"
+      <NuxtLink to="/auth/recover-password" prefetch class="link"
         >Esqueceu sua senha ?
       </NuxtLink>
     </app-text>

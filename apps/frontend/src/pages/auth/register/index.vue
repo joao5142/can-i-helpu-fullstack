@@ -12,7 +12,13 @@
     <app-input class="mt-3" type="text" placeholder="Senha" />
     <app-input class="mt-3" type="text" placeholder="Repetir Senha" />
 
-    <app-button glow class="mt-10" full @click="$router.push('/home')" prefetch>
+    <app-button
+      glow
+      class="mt-10"
+      full
+      @click="$router.push('/auth/login')"
+      prefetch
+    >
       Cadastrar
     </app-button>
   </div>

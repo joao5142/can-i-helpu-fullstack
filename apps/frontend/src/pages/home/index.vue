@@ -4,7 +4,12 @@
       <div class="w-100">
         <AppCard class="pa-4 send-post mb-4">
           <div class="d-flex gap-10">
-            <AppAvatar size="30" />
+            <AppAvatar
+              size="50"
+              class="cursor-pointer"
+              @click="$router.push('/perfil/joao5142')"
+              src="https://img.freepik.com/fotos-gratis/retrato-de-homem-branco-isolado_53876-40306.jpg?t=st=1744521220~exp=1744524820~hmac=6ec460f52147af55b6c98f56cb8c96a86cba62837bdd98fa5e634b35b3fb76de&w=826"
+            />
             <textarea
               class="send-post__message"
               type="text"
@@ -25,6 +30,8 @@
           <AppPost />
         </div>
       </div>
+
+      <AppDivider direction="vertical"></AppDivider>
 
       <div class="d-flex flex-column gap-20 ml-auto w-lg-75">
         <AppCard class="pa-4">
@@ -99,7 +106,7 @@ definePageMeta({
 <style scoped lang="scss">
 .page-container {
   display: grid;
-  grid-template-columns: minmax(700px, 1fr) 1fr;
+  grid-template-columns: minmax(700px, 1fr) auto 1fr;
   gap: 2rem;
 
   @media (max-width: 900px) {
