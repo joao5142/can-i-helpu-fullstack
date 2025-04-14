@@ -72,7 +72,10 @@ export default defineNuxtConfig({
   pwa: {
     registerType: "autoUpdate",
     injectRegister: false,
-
+    workbox: {
+      skipWaiting: true,
+      clientsClaim: false,
+    },
     manifest: {
       name: "Can I HelpU App",
       short_name: "Can I HelpU App",
