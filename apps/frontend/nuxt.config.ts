@@ -21,7 +21,7 @@ export default defineNuxtConfig({
   },
 
   ssr: false,
-  css: ["@can-i-helpu-ds/vue/style"],
+  css: ["@can-i-helpu-ds/vue/style", "vuetify/styles"],
 
   app: {
     head: {
@@ -72,6 +72,7 @@ export default defineNuxtConfig({
   pwa: {
     registerType: "autoUpdate",
     injectRegister: false,
+
     manifest: {
       name: "Can I HelpU App",
       short_name: "Can I HelpU App",
