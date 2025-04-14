@@ -70,12 +70,17 @@ export default defineNuxtConfig({
   ],
 
   pwa: {
-    registerType: "autoUpdate",
-    injectRegister: false,
-    workbox: {
-      skipWaiting: true,
-      clientsClaim: false,
+    devOptions: {
+      enabled: true,
     },
+    workbox: {
+      globPatterns: [], // Não fazer precache de nada
+      runtimeCaching: [],
+    },
+    injectManifest: {
+      injectionPoint: undefined,
+    },
+    selfDestroying: true,
     manifest: {
       name: "Can I HelpU App",
       short_name: "Can I HelpU App",
