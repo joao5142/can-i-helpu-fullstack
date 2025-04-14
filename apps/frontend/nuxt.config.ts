@@ -70,10 +70,8 @@ export default defineNuxtConfig({
   ],
 
   pwa: {
-    workbox: {
-      navigateFallback: "/",
-      navigateFallbackAllowlist: [/^\/$/],
-    },
+    registerType: "autoUpdate",
+    injectRegister: false,
     manifest: {
       name: "Can I HelpU App",
       short_name: "Can I HelpU App",
