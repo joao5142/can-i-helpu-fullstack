@@ -7,8 +7,8 @@
       Registre sua conta parar ajudar outras pessoas.
     </app-text>
 
-    <app-input class="mt-10" type="text" placeholder="E-mail" />
-    <app-input class="mt-3" type="text" placeholder="Senha" />
+    <app-input class="mt-10" type="text" placeholder="Nome" />
+    <app-input class="mt-3" type="text" placeholder="E-mail" />
     <app-input class="mt-3" type="text" placeholder="Senha" />
     <app-input class="mt-3" type="text" placeholder="Repetir Senha" />
 

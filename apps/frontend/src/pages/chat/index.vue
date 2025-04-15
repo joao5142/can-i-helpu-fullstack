@@ -90,6 +90,14 @@ definePageMeta({
   grid-template-columns: 1fr 4fr 1fr;
   gap: 1rem;
 
+  @media (max-width: 1000px) {
+    grid-template-columns: 1fr;
+
+    & :nth-child(3) {
+      display: none !important;
+    }
+  }
+
   &__conversations {
     flex: 1;
     max-height: 100%;
@@ -115,6 +123,12 @@ definePageMeta({
 
     border-inline: 1px solid rgb(var(--v-theme-gray-200));
 
+    @media (max-width: 1000px) {
+      & {
+        width: 100%;
+      }
+    }
+
     &-content {
       flex: 1;
       overflow-y: auto;
@@ -122,9 +136,6 @@ definePageMeta({
       display: flex;
       flex-direction: column;
       gap: 1rem;
-    }
-
-    &-footer {
     }
   }
 }

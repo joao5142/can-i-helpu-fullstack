@@ -179,10 +179,10 @@
         </app-text>
 
         <app-text as="span">Insira a Tumb</app-text>
-        <AppDragFile v-model="thumbImage" />
+        <AppDragFile class="image-select" v-model="thumbImage" />
 
         <app-text as="span">Insira as imagens </app-text>
-        <AppDragFile v-model="fundraiserImages" />
+        <AppDragFile class="image-select" v-model="fundraiserImages" />
 
         <app-text as="span">Nome Da Vaquinha </app-text>
         <app-input type="text" placeholder="Nome" />
@@ -328,6 +328,14 @@ const imFollowing = true;
     height: 100px;
     object-fit: cover;
     width: 100%;
+  }
+}
+
+.image-select {
+  @media (max-width: 800px) {
+    height: 400px;
+    width: 100%;
+    overflow: hidden;
   }
 }
 </style>

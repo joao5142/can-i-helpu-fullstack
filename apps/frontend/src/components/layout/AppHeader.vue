@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <AppContainer class="d-flex align-center justify-space-between">
+    <AppContainer class="d-flex gap-10 align-center justify-space-between">
       <div class="d-flex gap-30 align-center">
         <HomeIcon
           class="cursor-pointer header__icon"
@@ -62,8 +62,12 @@ function handleClickActionIcons(action: string) {
 .header {
   border-bottom: 1px solid rgb(var(--v-theme-gray-200));
 
+  gap: 1rem;
+
   &__search {
-    width: 800px;
+    max-width: 800px;
+
+    width: 100%;
   }
 
   &__icon {

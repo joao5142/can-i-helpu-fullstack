@@ -30,6 +30,10 @@ const classes = computed(() => {
 
   width: 33%;
 
+  @media (max-width: 1000px) {
+    width: 100%;
+  }
+
   &--sender {
     color: rgb(var(--v-theme-text-100));
 

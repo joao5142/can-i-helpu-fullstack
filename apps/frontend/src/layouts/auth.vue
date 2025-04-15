@@ -10,6 +10,7 @@
       </div>
     </div>
     <app-loading v-if="isLoading" />
+    <vite-pwa-manifest></vite-pwa-manifest>
   </div>
 </template>
 
