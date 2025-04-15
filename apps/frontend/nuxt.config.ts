@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   rootDir: __dirname,
   srcDir: "src/",
-  dir: { public: "../public" },
+  dir: { public: "./public" },
   serverDir: "../server",
 
   build: {
@@ -79,9 +79,9 @@ export default defineNuxtConfig({
     },
     selfDestroying: true,
     manifest: {
-      name: "Can I HelpU App",
-      short_name: "Can I HelpU App",
-      description: "Can I HelpU App",
+      name: "Can I HelpU",
+      short_name: "Can I HelpU",
+      description: "Can I HelpU",
       start_url: "/",
       theme_color: "#ffffff",
       display: "standalone",
@@ -89,10 +89,16 @@ export default defineNuxtConfig({
       screenshots: [
         {
           src: "manifest/screen.png",
-          sizes: "320x320",
+          sizes: "512x512",
           type: "image/png",
           form_factor: "wide",
           label: "Can I HelpU",
+        },
+        {
+          src: "manifest/narrow.jpg",
+          type: "image/jpg",
+          sizes: "360x640",
+          form_factor: "narrow",
         },
       ],
       icons: [
