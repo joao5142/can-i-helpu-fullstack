@@ -7,9 +7,9 @@ import {
   UsePipes,
   Body,
 } from "@nestjs/common";
-import { AuthService } from "./auth.service";
-import { JwtAuthGuard } from "./jwt-auth.guard";
-import { ZodValidationPipe } from "pipes/zod-validation-pipe";
+import { AuthService } from "./auth.service.ts";
+import { JwtAuthGuard } from "./jwt-auth.guard.ts";
+import { ZodValidationPipe } from "../../../pipes/zod-validation-pipe.ts";
 import { z } from "zod";
 
 const createAccountBodySchema = z.object({

@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
-import { PrismaService } from "./prisma/prisma.service";
-import { envSchema } from "./env";
-import { AuthModule } from "./modules/auth/auth.module";
-import { PrismaModule } from "./prisma/prisma.module";
+import { AppController } from "./app.controller.ts";
+import { AppService } from "./app.service.ts";
+import { PrismaService } from "./prisma/prisma.service.ts";
+import { envSchema } from "./env.ts";
+import { AuthModule } from "./modules/auth/auth.module.ts";
+import { PrismaModule } from "./prisma/prisma.module.ts";
 
 @Module({
   imports: [
