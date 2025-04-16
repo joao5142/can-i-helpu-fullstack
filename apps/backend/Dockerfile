@@ -1,36 +1,15 @@
-FROM node:20-slim AS builder
+# Base image
+FROM node:18
 
-RUN apt-get update && apt-get install -y \
-  openssl \
-  python3 \
-  build-essential \
-  && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+WORKDIR /usr/src/app
 
-COPY .npmrc .pnpmfile.cjs package.json pnpm-lock.yaml ./
+COPY package*.json ./
 
-RUN npm install -g pnpm && pnpm install
+RUN npm install
 
 COPY . .
 
-RUN pnpm prisma generate
-RUN pnpm build
+RUN npm run build
 
-
-FROM node:20-slim
-
-WORKDIR /app
-
-RUN npm install -g pnpm
-
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/package.json ./
-COPY --from=builder /app/prisma ./prisma
-
-ENV NODE_ENV=production
-
-EXPOSE 3000
-
-CMD ["sh", "-c", "pnpm prisma migrate deploy && node dist/main.js"]
+CMD [ "node", "dist/main.js" ]
