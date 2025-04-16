@@ -7,6 +7,7 @@ import { AuthModule } from "./modules/auth/auth.module";
 import { OngModule } from "./modules/ong/ong.module";
 import { FundraiserModule } from "./modules/fundraiser/fundraiser.module";
 import { PostModule } from "./modules/post/post.module";
+import { ChatModule } from "./modules/chat/chat.module";
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { PostModule } from "./modules/post/post.module";
     AuthModule,
     OngModule,
     FundraiserModule,
-    PostModule
+    PostModule,
+    ChatModule
   ],
   controllers: [AppController],
   providers: [AppService],
