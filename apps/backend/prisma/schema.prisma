@@ -7,11 +7,173 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  COMPANY
+}
+
 model User {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
+  id              Int      @id @default(autoincrement())
+  name            String
+  email           String   @unique
+  password        String
+  bio             String
+  role            Role
+  emailVerifiedAt DateTime @default(now())
+
+  Ong              Ong[]
+  Post             Post[]
+  PostLike         PostLike[]
+  PostComment      PostComment[]
+  sentMessages     Message[]     @relation("sentMessages")
+  receivedMessages Message[]     @relation("receivedMessages")
+  initiatedChats   Chat[]        @relation("initiator")
+  receivedChats    Chat[]        @relation("recipient")
+  followers        Follower[]    @relation("followersAsFollowing")
+  followings       Follower[]    @relation("followersAsFollower")
+  Fundraiser       Fundraiser[]
 
   @@map("users")
+}
+
+model Ong {
+  id              Int              @id @default(autoincrement())
+  name            String
+  document        String           @unique
+  user            User             @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId          Int
+  pixKey          String
+  emailVerifiedAt DateTime         @default(now())
+  OngCategoryOng  OngCategoryOng[]
+
+  @@map("ongs")
+}
+
+model OngCategory {
+  id             Int              @id @default(autoincrement())
+  name           String
+  slug           String           @unique
+  OngCategoryOng OngCategoryOng[]
+
+  @@map("ong_categories")
+}
+
+model OngCategoryOng {
+  id Int @id @default(autoincrement())
+
+  ong   Ong @relation(fields: [ongId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ongId Int
+
+  ongCategory      OngCategory @relation(fields: [ongCategoryOngId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  ongCategoryOngId Int
+
+  @@map("ong_category_ong")
+}
+
+model Post {
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String @unique
+  imageUrl    String
+
+  author      User          @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authorId    Int
+  PostLike    PostLike[]
+  PostComment PostComment[]
+
+  @@map("posts")
+}
+
+model PostLike {
+  id Int @id @default(autoincrement())
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId Int
+
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postId Int
+
+  @@map("post_likes")
+}
+
+model PostComment {
+  id Int @id @default(autoincrement())
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId Int
+
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  postId Int
+
+  @@map("post_comments")
+}
+
+model Follower {
+  id Int @id @default(autoincrement())
+
+  follower   User @relation("followersAsFollower", fields: [followerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  followerId Int
+
+  following   User @relation("followersAsFollowing", fields: [followingId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  followingId Int
+
+  @@map("followers")
+}
+
+model Chat {
+  id Int @id @default(autoincrement())
+
+  message String
+
+  initiator   User @relation("initiator", fields: [initiatorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  initiatorId Int
+
+  recipient   User      @relation("recipient", fields: [recipientId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  recipientId Int
+  Message     Message[]
+
+  @@map("chats")
+}
+
+model Message {
+  id Int @id @default(autoincrement())
+
+  message String
+
+  sender   User @relation("sentMessages", fields: [senderId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  senderId Int
+
+  receiver   User @relation("receivedMessages", fields: [receiverId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  receiverId Int
+
+  chat   Chat @relation(fields: [chatId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  chatId Int
+
+  @@map("messages")
+}
+
+model Fundraiser {
+  id Int @id @default(autoincrement())
+
+  creator   User @relation(fields: [creatorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  creatorId Int
+
+  title           String
+  description     String
+  arrecadationUrl String
+  pixKey          String
+  FundraiserImage FundraiserImage[]
+
+  @@map("fundraisers")
+}
+
+model FundraiserImage {
+  id Int @id @default(autoincrement())
+
+  url String
+
+  fundraiser   Fundraiser @relation(fields: [fundraiserId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  fundraiserId Int
+
+  @@map("fundraiser_images")
 }
