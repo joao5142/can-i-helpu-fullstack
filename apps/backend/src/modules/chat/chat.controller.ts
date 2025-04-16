@@ -6,18 +6,17 @@ import {
   HttpCode,
   UsePipes,
   Body,
+  Get,
+  Param,
 } from "@nestjs/common";
-import { AuthService } from "./auth.service";
-import { JwtAuthGuard } from "./jwt-auth.guard";
-import { ZodValidationPipe } from "@/pipes/zod-validation-pipe";
+import { ChatService } from "./chat.service";
+ import { ZodValidationPipe } from "@/pipes/zod-validation-pipe";
 import { z } from "zod";
 
 const createAccountBodySchema = z.object({
   name: z.string(),
   email: z.string().email(),
   password: z.string(),
-  bio: z.string(),
-  role: z.enum(['USER','ONG']),
 });
 
 type CreateAccountBodySchemaType = z.infer<typeof createAccountBodySchema>;
@@ -29,11 +28,11 @@ const loginBodySchema = z.object({
 
 type LoginBodySchemaType = z.infer<typeof loginBodySchema>;
 
-@Controller("/api/auth")
-export class AuthController {
-  constructor(private authService: AuthService) {}
+@Controller("/api/posts")
+export class PostController {
+  constructor(private authService: ChatService) {}
 
-  @Post("/login")
+  @Post("/register")
   @UsePipes(new ZodValidationPipe(loginBodySchema))
   async login(@Request() req, @Body() body) {
     const user = loginBodySchema.parse(body);
@@ -41,12 +40,10 @@ export class AuthController {
     return this.authService.login(user);
   }
 
-  @Post("/register")
-  @HttpCode(201)
+  @Get(":id")
+  @HttpCode(200)
   @UsePipes(new ZodValidationPipe(createAccountBodySchema))
-  async handle(@Body() body: CreateAccountBodySchemaType) {
-    const { name, email, password,bio,role } = createAccountBodySchema.parse(body);
-
-    return await this.authService.register({ name, email, password , bio, role });
+  async handle(@Param('id') id: string) {
+      return 'teste'
   }
 }

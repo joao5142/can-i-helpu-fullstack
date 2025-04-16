@@ -1,5 +1,5 @@
-import { AppModule } from "@/app.module.ts";
-import { PrismaService } from "@/prisma/prisma.service.ts";
+import { AppModule } from "@/app.module";
+import { PrismaService } from "../../prisma/prisma.service";
 import { INestApplication } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import { hash } from "bcrypt";
@@ -47,6 +47,8 @@ describe("Auth Controller (E2E)", () => {
         name: "Jon",
         email: "jondoe2@example.com",
         password: await hash("123456", 8),
+        bio:'teste',
+        role:'USER'
       },
     });
 

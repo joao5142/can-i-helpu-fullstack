@@ -1,28 +1,32 @@
-import { Module } from "@nestjs/common";
-import { AuthService } from "./auth.service.ts";
-import { PassportModule } from "@nestjs/passport";
-import { JwtModule } from "@nestjs/jwt";
-import { ConfigService } from "@nestjs/config";
-import { EnvType } from "../../env.ts";
-import { JwtStrategy } from "./strategies/jwt.strategy.ts";
-import { AuthController } from "./auth.controller.ts";
+import { Module } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
+import { JwtModule } from '@nestjs/jwt'
+import { PassportModule } from '@nestjs/passport'
+import { EnvType } from 'src/env'
+import { JwtStrategy } from './strategies/jwt.strategy'
+import { AuthController } from './auth.controller'
+import { AuthService } from './auth.service'
+import { PrismaService } from '@/prisma/prisma.service'
 
 @Module({
   imports: [
     PassportModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
+      global: true,
       useFactory(config: ConfigService<EnvType, true>) {
-        const secret = config.get("JWT_SECRET", { infer: true });
+        const privateKey = config.get('JWT_PRIVATE_KEY', { infer: true })
+        const publicKey = config.get('JWT_PUBLIC_KEY', { infer: true })
 
         return {
-          signOptions: { algorithm: "HS256" },
-          secret,
-        };
+          signOptions: { algorithm: 'RS256' },
+          privateKey: Buffer.from(privateKey, 'base64'),
+          publicKey: Buffer.from(publicKey, 'base64'),
+        }
       },
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy , PrismaService],
 })
 export class AuthModule {}

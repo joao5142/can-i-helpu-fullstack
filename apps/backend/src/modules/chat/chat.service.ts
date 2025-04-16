@@ -1,40 +1,21 @@
-import { ConflictException, Injectable, UnauthorizedException } from "@nestjs/common";
+import { ConflictException, Injectable } from "@nestjs/common";
 
 import { JwtService } from "@nestjs/jwt";
 import { PrismaService } from "../../prisma/prisma.service";
-import { compare, hash } from "bcrypt";
+import { hash } from "bcrypt";
 
 @Injectable()
-export class AuthService {
+export class ChatService {
   constructor(
     private jwtService: JwtService,
     private prisma: PrismaService
   ) {}
 
-  async login(userData: any) {
-    const payload = { email: userData.email, password: userData.password };
-
-    const user = await this.prisma.user.findUnique({
-      where: {
-        email : payload.email,
-      },
-    })
-
-    if (!user) {
-      throw new UnauthorizedException('User credentials do not match.')
-    }
-
-    const isPasswordValid = await compare(payload.password, user.password)
-
-    if (!isPasswordValid) {
-      throw new UnauthorizedException('User credentials do not match.')
-    }
-
-    const accessToken = this.jwtService.sign({ sub: user.id })
-
+  async login(user: any) {
+    const payload = { username: user.email, password: user.password };
     return {
-      access_token: accessToken,
-    }
+      access_token: this.jwtService.sign(payload),
+    };
   }
 
   async register(user: any) {
