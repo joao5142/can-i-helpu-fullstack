@@ -94,7 +94,7 @@ base64 public.pem > public_base64.txt
 <hr/>
 <img margin-bottom="20px" src="/apps/frontend/src/assets/readme/4.png">
 
-<h4  style="display: inline_block">Visualização do site :</h4><a style="display: inline_block" target="blank" href="https://resilient-sherbet-ce099f.netlify.app/auth/login/">Preview na Vercel</a>
+<h4  style="display: inline_block">Visualização do site :</h4><a style="display: inline_block" target="blank" href="https://resilient-sherbet-ce099f.netlify.app/auth/login/">Preview do site</a>
 
 <h2>🧑🏻‍ Autor</h2>
 <p>Feito por João paulo</p>
