@@ -6,13 +6,13 @@
 @ongId = {{ create_ong.response.body.id }}
 
 # @name test
-GET {{baseUrl}}/hello
+GET {{ baseUrl }}/hello
 Content-Type:  application/json
  
 ###
 
 # @name create_account
-POST {{baseUrl}}/auth/register
+POST {{ baseUrl }}/auth/register
 Content-Type:  application/json
 
 {
@@ -26,7 +26,7 @@ Content-Type:  application/json
 ###
 
 # @name login
-POST {{baseUrl}}/auth/login
+POST {{ baseUrl }}/auth/login
 Content-Type:  application/json
 
 {
@@ -38,7 +38,7 @@ Content-Type:  application/json
 ###
 
 # @name create_ong
-POST {{baseUrl}}/ongs
+POST {{ baseUrl }}/ongs
 Content-Type:  application/json
 Authorization: Bearer {{authToken}}
 
@@ -51,7 +51,7 @@ Authorization: Bearer {{authToken}}
 ###
 
 # @name create_ong_category
-POST {{baseUrl}}/ongs/categories
+POST {{ baseUrl }}/ongs/categories
 Content-Type:  application/json
 Authorization: Bearer {{authToken}}
 
@@ -68,3 +68,98 @@ GET {{ baseUrl }}/ongs/{{ ongId }}
 Content-Type:  application/json
 Authorization: Bearer {{authToken}}
  
+
+
+###
+
+# @name create_post
+POST {{ baseUrl }}/posts
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+ 
+{
+    "description": "Post Teste",
+    "imageUrl": "",
+    "title": "Title"
+}
+
+###
+
+# @name get_post
+GET {{ baseUrl }}/posts/1
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+ 
+
+
+###
+
+# @name create_fundraiser
+POST {{ baseUrl }}/fundraisers
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+ 
+{
+    "description": "Vaquinha 123 Teste",
+    "title": "Title",
+    "arrecadationUrl": "https://arrecadacao.br",
+    "pixKey": "1234567"
+}
+
+###
+
+# @name get_fundraiser
+GET {{ baseUrl }}/fundraisers/1
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+ 
+
+###
+
+# @name create_chat
+POST {{ baseUrl }}/chats
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+ 
+{
+  "initiatorId":"1",
+  "recipientId":"2"
+}
+
+###
+
+
+# @name create_chat_message
+POST {{ baseUrl }}/chats/messages
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+ 
+{
+  "chatId": "1",
+  "senderId": "1",
+  "receiverId": "2",
+  "message": "Teste message"
+}
+
+
+###
+
+# @name get_chat
+GET {{ baseUrl }}/chats/1
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+
+
+###
+
+# @name get_chat_message
+GET {{ baseUrl }}/chats/messages/1
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+# @name get_chat_messages
+GET {{ baseUrl }}/chats/1/messages
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
