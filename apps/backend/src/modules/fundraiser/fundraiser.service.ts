@@ -10,31 +10,28 @@ export class FundraiserService {
     private prisma: PrismaService
   ) {}
 
-
-
-  async register(user: any) {
-    const userWithSameEmail = await this.prisma.user.findUnique({
-      where: {
-        email: user.email,
-      },
+  async create(fundraiserData: any) {
+    const fundraiser = await this.prisma.fundraiser.create({
+       data: {
+        description: fundraiserData.description,
+        title: fundraiserData.title,
+        creatorId: fundraiserData.creatorId,
+        arrecadationUrl:fundraiserData.arrecadationUrl ?? '',
+        pixKey:fundraiserData.arrecadationUrl
+       }
     });
 
-    if (userWithSameEmail) {
-      throw new ConflictException("User with same email already exists");
-    }
+    return fundraiser
+  }
 
-    const hashedPassword = await hash(user.password, 8);
 
-    const createdUser = await this.prisma.user.create({
-      data: {
-        name: user.name,
-        email: user.email,
-        password: hashedPassword,
-        bio: user.bio,
-        role:user.role ?? 'USER',
-      },
+  async getById(id: any) {
+    const fundraiser = await this.prisma.fundraiser.findFirst({
+      where:{
+        id
+      }
     });
 
-    return createdUser;
+    return fundraiser
   }
 }

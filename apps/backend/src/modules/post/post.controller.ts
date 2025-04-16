@@ -12,37 +12,46 @@ import {
 import { PostService } from "./post.service";
  import { ZodValidationPipe } from "@/pipes/zod-validation-pipe";
 import { z } from "zod";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
+import { UserPayload } from "../auth/strategies/jwt.strategy";
+import { CurrentUser } from "../auth/current-user.decorator";
+import { ApiBearerAuth, ApiBody, ApiProperty, ApiTags } from "@nestjs/swagger";
 
-const createAccountBodySchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  password: z.string(),
+const createPostBodySchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  image_url: z.string().optional(),
 });
 
-type CreateAccountBodySchemaType = z.infer<typeof createAccountBodySchema>;
 
-const loginBodySchema = z.object({
-  email: z.string(),
-  password: z.string(),
-});
+class CreatePostDto {
+  @ApiProperty()
+  title: string
 
-type LoginBodySchemaType = z.infer<typeof loginBodySchema>;
+  @ApiProperty()
+  description: string
 
-@Controller("/api/posts")
-export class PostController {
-  constructor(private authService: PostService) {}
-
-  @Post("/register")
-  @UsePipes(new ZodValidationPipe(loginBodySchema))
-  async login(@Request() req, @Body() body) {
+  @ApiProperty({ required:false })
+  image_url: string
+}
  
+@Controller("/api/posts")
+@UseGuards(JwtAuthGuard)
+@ApiTags('Posts')
+@ApiBearerAuth("access_token")
+export class PostController {
+  constructor(private postService: PostService) {}
+
+  @Post()
+  @ApiBody({ type: CreatePostDto})
+  async register(@CurrentUser() user: UserPayload, @Body(new ZodValidationPipe(createPostBodySchema)) body) {
+    const createData = createPostBodySchema.parse(body);
+  
+    return this.postService.create({...createData, authorId: user.sub});
   }
 
-  @Get(":id")
-  @HttpCode(200)
-  @UsePipes(new ZodValidationPipe(createAccountBodySchema))
-  async handle(@Param('id') id: string) {
-     
-    return 'teste'
+  @Get(':id')
+  async getById(@Param('id') id) {
+    return this.postService.getById(Number(id));
   }
 }

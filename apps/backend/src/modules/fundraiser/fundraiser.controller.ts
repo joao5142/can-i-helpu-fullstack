@@ -10,38 +10,53 @@ import {
   Param,
 } from "@nestjs/common";
 import { FundraiserService } from "./fundraiser.service";
- import { ZodValidationPipe } from "@/pipes/zod-validation-pipe";
+import { ZodValidationPipe } from "@/pipes/zod-validation-pipe";
 import { z } from "zod";
+import { CurrentUser } from "../auth/current-user.decorator";
+import { UserPayload } from "../auth/strategies/jwt.strategy";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
+import { ApiBearerAuth, ApiBody, ApiProperty, ApiTags } from "@nestjs/swagger";
 
-const createAccountBodySchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  password: z.string(),
+const createFundtraiserBodySchema = z.object({
+  description: z.string(),
+  title:  z.string(),
+  arrecadationUrl: z.string().optional(),
+  pixKey: z.string().optional()
 });
 
-type CreateAccountBodySchemaType = z.infer<typeof createAccountBodySchema>;
 
-const loginBodySchema = z.object({
-  email: z.string(),
-  password: z.string(),
-});
+class CreateFundraiserDto {
+  @ApiProperty()
+  description: string
 
-type LoginBodySchemaType = z.infer<typeof loginBodySchema>;
+  @ApiProperty()
+  title: string
 
+  @ApiProperty({ required:false })
+  arrecadationUrl: string
+
+  @ApiProperty({ required:false })
+  pixKey : string
+}
+ 
 @Controller("/api/fundraisers")
+@UseGuards(JwtAuthGuard)
+@ApiTags('Fundraisers')
+@ApiBearerAuth("access_token")
 export class FundraiserController {
   constructor(private fundraiserService: FundraiserService) {}
-
-  @Post("/register")
-  @UsePipes(new ZodValidationPipe(loginBodySchema))
-  async login(@Request() req, @Body() body) {
- 
+  
+  @Post()
+  @ApiBody({ type: CreateFundraiserDto})
+  async register(@CurrentUser() user: UserPayload , @Body(new ZodValidationPipe(createFundtraiserBodySchema)) body) {
+    const createData = createFundtraiserBodySchema.parse(body);
+  
+    return this.fundraiserService.create({...createData, creatorId: user.sub});
   }
 
-  @Get(":id")
-  @HttpCode(200)
-  @UsePipes(new ZodValidationPipe(createAccountBodySchema))
-  async handle(@Param('id') id: string) {
-      return 'teste'
+  @Get(':id')
+  async getById(@Param('id') id) {
+    return this.fundraiserService.getById(Number(id));
   }
+
 }

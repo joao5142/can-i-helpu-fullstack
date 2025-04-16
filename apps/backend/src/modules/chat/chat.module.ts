@@ -5,13 +5,13 @@ import { JwtModule } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { EnvType } from "../../env";
 
-import { PostController } from "./chat.controller";
+import { ChatController } from "./chat.controller";
 import { PrismaService } from "@/prisma/prisma.service";
 
 @Module({
   imports: [
   ],
-  controllers: [PostController],
+  controllers: [ChatController],
   providers: [ChatService , PrismaService],
 })
 export class ChatModule {}

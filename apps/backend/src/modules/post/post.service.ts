@@ -5,6 +5,7 @@ import { PrismaService } from "../../prisma/prisma.service";
 import { hash } from "bcrypt";
 
 @Injectable()
+
 export class PostService {
   constructor(
 
@@ -12,30 +13,27 @@ export class PostService {
   ) {}
 
  
-
-  async register(user: any) {
-    const userWithSameEmail = await this.prisma.user.findUnique({
-      where: {
-        email: user.email,
-      },
+  async create(postData: any) {
+    const post = await this.prisma.post.create({
+       data: {
+        description: postData.description,
+        imageUrl: postData.image_url  ?? '',
+        title: postData.title,
+        authorId: postData.authorId
+       }
     });
 
-    if (userWithSameEmail) {
-      throw new ConflictException("User with same email already exists");
-    }
+    return post
+  }
 
-    const hashedPassword = await hash(user.password, 8);
 
-    const createdUser = await this.prisma.user.create({
-      data: {
-        name: user.name,
-        email: user.email,
-        password: hashedPassword,
-        bio: user.bio,
-        role:user.role ?? 'USER',
-      },
+  async getById(id: any) {
+    const post = await this.prisma.post.findFirst({
+      where:{
+        id
+      }
     });
 
-    return createdUser;
+    return post
   }
 }

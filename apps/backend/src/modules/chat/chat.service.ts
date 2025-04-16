@@ -1,46 +1,66 @@
 import { ConflictException, Injectable } from "@nestjs/common";
 
-import { JwtService } from "@nestjs/jwt";
 import { PrismaService } from "../../prisma/prisma.service";
-import { hash } from "bcrypt";
-
+ 
 @Injectable()
 export class ChatService {
   constructor(
-    private jwtService: JwtService,
     private prisma: PrismaService
   ) {}
 
-  async login(user: any) {
-    const payload = { username: user.email, password: user.password };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
+  async create(chatData: any) {
+    const chat = await this.prisma.chat.create({
+       data: {
+          initiatorId: Number(chatData.initiatorId),
+          recipientId: Number(chatData.recipientId)
+       }
+    });
+
+    return chat
   }
 
-  async register(user: any) {
-    const userWithSameEmail = await this.prisma.user.findUnique({
-      where: {
-        email: user.email,
-      },
+  async createMessage(chatData: any) {
+    const chatMessage = await this.prisma.message.create({
+       data: {
+          message: chatData.message,
+          chatId: Number(chatData.chatId),
+          receiverId: Number(chatData.receiverId),
+          senderId: Number(chatData.senderId)
+       }
     });
 
-    if (userWithSameEmail) {
-      throw new ConflictException("User with same email already exists");
-    }
+    return chatMessage
+  }
 
-    const hashedPassword = await hash(user.password, 8);
 
-    const createdUser = await this.prisma.user.create({
-      data: {
-        name: user.name,
-        email: user.email,
-        password: hashedPassword,
-        bio: user.bio,
-        role:user.role ?? 'USER',
-      },
+  async getMessageById(messageId: any) {
+    const chatMessage = await this.prisma.message.findFirst({
+        where:{
+          id: Number(messageId)
+        }
     });
 
-    return createdUser;
+    return chatMessage
+  }
+
+
+  async getChatMessages(chatId: any) {
+    const messages = await this.prisma.message.findMany({
+      where:{
+        chatId : chatId
+      }
+    });
+
+    return messages
+  }
+
+  async getById(id: any) {
+    const chat = await this.prisma.chat.findFirst({
+      where:{
+        id
+      }
+    });
+
+    return chat
   }
 }
