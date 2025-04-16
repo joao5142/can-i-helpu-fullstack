@@ -1,6 +1,9 @@
 @baseUrl= http://localhost:3333/api
-@authToken= {{login.response.body.access_token }}
+@authToken= {{ login.response.body.access_token }}
 
+@ongCategoryId = {{ create_ong_category.response.body.id }}
+
+@ongId = {{ create_ong.response.body.id }}
 
 # @name test
 GET {{baseUrl}}/hello
@@ -15,7 +18,9 @@ Content-Type:  application/json
 {
     "name":"João",
     "email":"joao@gmail.com.br",
-    "password":"123456"
+    "password":"123456",
+    "bio": "Teste bio",
+    "role":"USER"
 }
 
 ###
@@ -29,13 +34,37 @@ Content-Type:  application/json
     "password":"123456"
 }
 
+
 ###
 
-# @name authenticate
-POST {{baseUrl}}/sessions
+# @name create_ong
+POST {{baseUrl}}/ongs
 Content-Type:  application/json
+Authorization: Bearer {{authToken}}
 
 {
-    "email":"joao@gmail.com.br",
-    "password":"123456"
+    "document": "12314124143",
+    "pixKey": "124423123",
+    "name": "Ong 123"
 }
+
+###
+
+# @name create_ong_category
+POST {{baseUrl}}/ongs/categories
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "name":"Animais4",
+    "slug":"animais4"
+}
+
+
+###
+
+# @name get_ong
+GET {{ baseUrl }}/ongs/{{ ongId }}
+Content-Type:  application/json
+Authorization: Bearer {{authToken}}
+ 
