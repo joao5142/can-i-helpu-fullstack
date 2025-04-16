@@ -1,11 +1,12 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { AppController } from "./app.controller.ts";
-import { AppService } from "./app.service.ts";
-import { PrismaService } from "./prisma/prisma.service.ts";
-import { envSchema } from "./env.ts";
-import { AuthModule } from "./modules/auth/auth.module.ts";
-import { PrismaModule } from "./prisma/prisma.module.ts";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
+import { envSchema } from "./env";
+import { AuthModule } from "./modules/auth/auth.module";
+import { OngModule } from "./modules/ong/ong.module";
+import { FundraiserModule } from "./modules/fundraiser/fundraiser.module";
+import { PostModule } from "./modules/post/post.module";
 
 @Module({
   imports: [
@@ -14,10 +15,11 @@ import { PrismaModule } from "./prisma/prisma.module.ts";
       isGlobal: true,
     }),
     AuthModule,
-    PrismaModule,
+    OngModule,
+    FundraiserModule,
+    PostModule
   ],
   controllers: [AppController],
   providers: [AppService],
-  exports: [PrismaModule],
 })
 export class AppModule {}
