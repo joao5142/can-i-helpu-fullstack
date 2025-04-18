@@ -10,8 +10,9 @@ RUN npm install -g pnpm \
 COPY . .
 
 RUN pnpm dlx prisma generate
-RUN pnpm dlx prisma migrate deploy
 
 RUN pnpm run build
 
-CMD ["node", "dist/main"]
+COPY entrypoint.sh ./
+
+CMD ["sh", "./entrypoint.sh"]
