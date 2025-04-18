@@ -15,4 +15,4 @@ RUN pnpm run build
 
 COPY entrypoint.sh ./
 
-CMD ["sh", "./entrypoint.sh"]
+CMD ["sh", "entrypoint.sh"]
