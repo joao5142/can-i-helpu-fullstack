@@ -2,6 +2,8 @@ FROM node:20
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y netcat-openbsd
+
 COPY ./package*.json ./
 
 RUN npm install -g pnpm \
