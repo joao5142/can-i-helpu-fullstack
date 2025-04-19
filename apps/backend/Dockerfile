@@ -14,5 +14,6 @@ RUN pnpm dlx prisma generate
 RUN pnpm run build
 
 COPY entrypoint.sh ./
+RUN chmod +x entrypoint.sh
 
-CMD ["sh", "entrypoint.sh"]
+CMD ["sh", "./entrypoint.sh"]
