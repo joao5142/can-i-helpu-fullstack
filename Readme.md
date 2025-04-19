@@ -95,8 +95,8 @@ base64 public.pem > public_base64.txt
 <img margin-bottom="20px" src="/apps/frontend/src/assets/readme/4.png">
 
 <h4  style="display: inline_block">Visualização do site :</h4><a style="display: inline_block" target="blank" href="https://resilient-sherbet-ce099f.netlify.app/auth/login/">Preview do site</a>
-<h4  style="display: inline_block">Visualização da API :</h4><a style="display: inline_block" target="blank" href="https://www.api.canihelpu.com.br/api">Link da API</a>
-
+<h4  style="display: inline_block">Visualização da API :</h4><a style="display: inline_block" target="blank" href="https://www.api.canihelpu.com.br/api">Documentação da API</a>
+<h4  style="display: inline_block">Visualização do Design System :</h4><a style="display: inline_block" target="blank" href="https://joao5142.github.io/design-system-02/?path=/docs/general-dragfile--docs">Design System</a>
 
 <h2>🧑🏻‍ Autor</h2>
 <p>Feito por João paulo</p>
